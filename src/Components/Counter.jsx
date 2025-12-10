@@ -1,9 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../features/counter/counterSlice";
+import { toggleTheme } from "../features/theme/themeSlice";
 
 function Counter() {
   const selectCounter = useSelector((state) => state.counter.value);
+  const selectTheme = useSelector((state) => state.theme.mode);
   const dispatch = useDispatch();
 
   return (
@@ -24,6 +26,17 @@ function Counter() {
             className="bg-blue-500 hover:bg-blue-700 text-white rounded-xl p-2 m-2 px-6 font-bold"
             onClick={() => {
               dispatch(decrement());
+            }}
+          >
+            Dec
+          </button>
+        </div>
+        <div>
+          {selectTheme}{" "}
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white rounded-xl p-2 m-2 px-6 font-bold"
+            onClick={() => {
+              dispatch(toggleTheme());
             }}
           >
             Dec
