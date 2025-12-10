@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../features/counter/counterSlice";
 import { toggleTheme } from "../features/theme/themeSlice";
+import { fetchJoke } from "../features/joke/jokeSlice";
 
 function Counter() {
   const selectCounter = useSelector((state) => state.counter.value);
@@ -9,6 +10,8 @@ function Counter() {
   const dispatch = useDispatch();
 
   const isDark = selectTheme === "dark";
+
+  const { data, loading, error } = useSelector((state) => state.joke);
 
   return (
     <>
@@ -46,6 +49,22 @@ function Counter() {
           >
             Theme : {selectTheme}
           </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white rounded-xl p-2 m-2 px-6 font-bold"
+            onClick={() => dispatch(fetchJoke())}
+          >
+            Get Joke
+          </button>
+          <div className="bg-gray-800 m-2 text-white rounded-2xl p-6">
+            {loading && <p>Loading...</p>}
+            {error && <p>{error}</p>}
+            {data && (
+              <div>
+                <p>{data.setup}</p>
+                <p>{data.punchline}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
